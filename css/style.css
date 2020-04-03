@@ -1,0 +1,251 @@
+@charset "UTF-8";
+
+/* 共通 ========== */
+html {
+ width: 100%;
+ height: 100%;
+ line-height: 1;
+ background: #fff;
+ color: #393939;
+ font-size: 62.5%;
+}
+
+body {
+ width: 100%;
+ margin: 0;
+ padding: 0;
+ border: 0;
+ font-size: 1rem;
+ line-height: 1.6;
+ overflow-y: scroll;
+ font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue',
+  HelveticaNeue, '游ゴシック体', YuGothic, '游ゴシック Medium',
+  'Yu Gothic Medium', '游ゴシック', 'Yu Gothic', Verdana, 'メイリオ', Meiryo,
+  sans-serif;
+ word-break: break-all;
+ -webkit-text-size-adjust: 100%;
+ background-repeat: no-repeat;
+ background-position: top center;
+ -webkit-background-size: cover;
+ background-size: cover;
+ background-attachment: fixed;
+}
+
+article,
+aside,
+details,
+figcaption,
+include,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary,
+figure {
+ display: block;
+ margin: 0;
+ padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt,
+dd,
+p,
+blockquote,
+ul,
+ol,
+li {
+ margin: 1.4em 0 0.6em;
+ padding: 0;
+ font-size: 100%;
+ vertical-align: baseline;
+ -webkit-overflow-wrap: break-word;
+ -ms-overflow-wrap: break-word;
+ overflow-wrap: break-word;
+ -webkit-word-wrap: break-word;
+ -ms-word-wrap: break-word;
+ word-wrap: break-word;
+ font-size: 1.6rem;
+}
+
+figcaption,
+span {
+ -webkit-overflow-wrap: break-word;
+ -ms-overflow-wrap: break-word;
+ overflow-wrap: break-word;
+ -webkit-word-wrap: break-word;
+ -ms-word-wrap: break-word;
+ word-wrap: break-word;
+}
+
+p {
+ font-size: 1.4rem;
+ margin: 8px 0;
+}
+
+audio,
+canvas,
+progress,
+video {
+ display: inline-block;
+ vertical-align: baseline;
+}
+
+audio:not([controls]) {
+ display: none;
+ height: 0;
+}
+
+[hidden],
+template {
+ display: none;
+}
+
+a {
+ transition: 0.3s color;
+ color: #026db6;
+}
+
+a:link {
+ color: #026db6;
+ text-decoration: none;
+}
+
+a:visited {
+ color: #026db6;
+ text-decoration: none;
+}
+
+a:hover,
+a:active {
+ color: #25a1ef;
+ text-decoration: underline;
+}
+
+i,
+em,
+address {
+ font-style: normal;
+}
+
+b,
+strong,
+em,
+.is-bold {
+ font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue',
+  HelveticaNeue, 'Segoe UI', '游ゴシック体', YuGothic, '游ゴシック', 'Yu Gothic',
+  Verdana, 'メイリオ', Meiryo, sans-serif;
+ font-weight: bold;
+}
+
+small {
+ font-size: 100%;
+}
+
+ul,
+ol {
+ margin: 1.2em 0;
+ padding: 0 0 0 2em;
+}
+
+li {
+ margin: 0.4em 0;
+}
+
+img {
+ border: 0;
+ vertical-align: top;
+ -ms-interpolation-mode: bicubic;
+}
+
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+
+td,
+th {
+ padding: 0;
+}
+
+/* サイト内共通 ========== */
+/* obj */
+.sp-obj {
+ display: block;
+}
+
+.pc-obj {
+ display: none;
+}
+
+/* clearfix */
+.clearfix {
+ *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+ content: '';
+ display: table;
+}
+
+.clearfix:after {
+ clear: both;
+}
+
+/* wrap-all */
+.wrap-all {
+ padding: 0;
+ box-sizing: border-box;
+ position: relative;
+}
+
+/* main-wrap */
+.main-wrap {
+ margin: 0 auto;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+/* inner */
+.inner {
+ margin: 0 auto;
+ width: 100%;
+ max-width: 1024px;
+ padding: 0 4%;
+ box-sizing: border-box;
+}
+
+/* Vue =========== */
+[v-cloak] {
+ display: none !important;
+}
+
+/* ヘッダー ========== */
+
+/* フッター ========== */
+.ft-wrap {
+ margin-top: 40px;
+}
+.ft-copy-wrap {
+ border-top: 1px solid #bdbdbd;
+}
+.ft-copy-box {
+ padding: 24px 0;
+}
+.ft-copy {
+ margin: 0;
+ text-align: center;
+}
+.ft-copy_tx {
+ font-size: 1.2rem;
+ color: #989898;
+}
