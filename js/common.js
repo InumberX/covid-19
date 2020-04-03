@@ -38,7 +38,7 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    getDataPref: function() {
     let self = this;
     axios
-     .post('https://covid19-japan-web-api.now.sh/api/v1/prefectures')
+     .post('api/get_data_pref.php')
      .then(function(res) {
       console.log(res);
      })
