@@ -3,6 +3,8 @@
 --------------------------------------------*/
 // ブレイクポイント
 const bp = 767;
+// グラフ
+let graph = [];
 
 /*------------------------------------------
  スムーススクロール
@@ -18,7 +20,7 @@ const smoothScrollOption = {
  // スクロール速度（1000pxのスクロールにかかる時間をミリ秒単位で指定）
  speed: 300,
  // スクロール距離を無視するかどうか
- speedAsDuration: true
+ speedAsDuration: true,
 };
 
 function actSmoothScroll(target) {
@@ -30,4 +32,45 @@ function actSmoothScroll(target) {
   smoothScroll.animateScroll(anchor, '', smoothScrollOption);
  }
  return false;
+}
+
+/*------------------------------------------
+ 現在日時を取得
+--------------------------------------------*/
+function getDate(tx) {
+ let now = new Date();
+ if (tx != null && tx !== '') {
+  now = new Date(tx);
+ }
+ const year = now.getFullYear();
+ const month = zeroPadding(now.getMonth() + 1, 2);
+ const date = zeroPadding(now.getDate(), 2);
+ const nowDate = year + '/' + month + '/' + date;
+ return nowDate;
+}
+
+function getDateTime(tx) {
+ let now = new Date();
+ if (tx != null && tx !== '') {
+  now = new Date(tx);
+ }
+ const year = now.getFullYear();
+ const month = zeroPadding(now.getMonth() + 1, 2);
+ const date = zeroPadding(now.getDate(), 2);
+ const hours = zeroPadding(now.getHours(), 2);
+ const minutes = zeroPadding(now.getMinutes(), 2);
+ const seconds = zeroPadding(now.getSeconds(), 2);
+ const nowDate = year + month + date + hours + minutes + seconds;
+ return nowDate;
+}
+
+/*------------------------------------------
+ 0埋め
+--------------------------------------------*/
+function zeroPadding(num, length) {
+ let zero = '';
+ for (let i = 0; i < length; i = (i + 1) | 0) {
+  zero += '0';
+ }
+ return (zero + num).slice(-length);
 }

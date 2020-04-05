@@ -13,7 +13,7 @@ header('Content-Type: application/json');
 $result = new stdClass;
 
 // データ取得先
-$url = 'https://covid19-japan-web-api.now.sh/api/v1/prefectures';
+$url = 'https://covid19-japan-web-api.now.sh/api/v1/total';
 
 // セッションを初期化
 $ch = curl_init();

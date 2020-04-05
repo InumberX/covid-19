@@ -73,7 +73,7 @@ li {
  -webkit-word-wrap: break-word;
  -ms-word-wrap: break-word;
  word-wrap: break-word;
- font-size: 1.6rem;
+ font-size: 1.4rem;
 }
 
 figcaption,
@@ -87,7 +87,6 @@ span {
 }
 
 p {
- font-size: 1.4rem;
  margin: 8px 0;
 }
 
@@ -230,10 +229,66 @@ th {
 }
 
 /* ヘッダー ========== */
+.hd-wrap {
+ width: 100%;
+ z-index: 1000;
+ box-sizing: border-box;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ padding: 0;
+}
+.hd-menu {
+ display: flex;
+ overflow: hidden;
+ border: 1px solid #f53e33;
+ border-radius: 56px;
+ margin-bottom: 16px;
+ box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.24);
+}
+.refine-btn,
+a.refine-btn {
+ display: block;
+ width: calc(100% - 72px);
+ border: none;
+ background-color: #fff;
+ color: #393939;
+ font-size: 1.4rem;
+ font-weight: bold;
+ padding: 0;
+ margin: 0;
+ outline: 0;
+ box-sizing: border-box;
+ text-align: center;
+ cursor: pointer;
+}
+.page-top-btn,
+a.page-top-btn {
+ display: block;
+ width: 72px;
+ height: 56px;
+ border: none;
+ border-left: 1px solid #f53e33;
+ background-color: #fff;
+ color: #393939;
+ font-size: 1.4rem;
+ padding: 0;
+ margin: 0;
+ outline: 0;
+ box-sizing: border-box;
+ text-align: center;
+ cursor: pointer;
+}
+.page-top-tx {
+ display: block;
+ font-size: 1rem;
+ line-height: 1;
+}
 
 /* フッター ========== */
 .ft-wrap {
  margin-top: 40px;
+ padding-bottom: 56px;
 }
 .ft-copy-wrap {
  border-top: 1px solid #bdbdbd;
@@ -248,4 +303,216 @@ th {
 .ft-copy_tx {
  font-size: 1.2rem;
  color: #989898;
+}
+
+/* ページタイトル ========== */
+.page-ttl-box {
+ background-color: #f53e33;
+ overflow: hidden;
+}
+.page-ttl {
+ margin: 0 auto;
+ padding: 24px 0 16px;
+ color: #f9f9f9;
+ position: relative;
+}
+.page-ttl_tx {
+ margin: 0;
+ font-size: 2.4rem;
+ font-weight: bold;
+}
+
+/* 合計数 ========== */
+.total-num-box {
+ position: relative;
+}
+.total-num-box:before {
+ content: '';
+ background-color: #f53e33;
+ width: 100%;
+ height: 24px;
+ display: block;
+ position: absolute;
+ left: 0;
+ top: 0;
+ z-index: 1;
+}
+.total-num_item {
+ margin: 0;
+ padding: 0;
+ display: flex;
+ width: 100%;
+ box-sizing: border-box;
+ border: 1px solid #bdbdbd;
+ border-radius: 4px;
+ background-color: #fff;
+ position: relative;
+ z-index: 2;
+ overflow: hidden;
+}
+.total-num_item + .total-num_item {
+ margin-top: 8px;
+}
+.total-num_ttl {
+ margin: 0;
+ padding: 8px 16px;
+ display: flex;
+ align-items: center;
+ width: 100px;
+ box-sizing: border-box;
+ border-right: 1px solid #bdbdbd;
+ background-color: #f5f5f5;
+}
+.total-num_cnt {
+ margin: 0;
+ padding: 8px 16px;
+ display: flex;
+ align-items: center;
+ width: calc(100% - 100px);
+ box-sizing: border-box;
+}
+.total-num_cnt-num {
+ font-size: 1.8rem;
+ font-weight: bold;
+}
+
+/* エラーメッセージ ========== */
+.error-mes-box {
+ margin-top: 16px;
+}
+.error-mes_ttl {
+ margin: 0;
+ font-size: 1.8rem;
+ font-weight: bold;
+}
+.error-mes_tx {
+ margin: 8px 0 0;
+}
+
+/* ローディング ========== */
+.loading-box {
+ margin: 16px 0 0;
+}
+.loading {
+ margin: 0 auto;
+ display: block;
+ width: 40px;
+ height: 40px;
+ border: 20px solid #f53e33;
+ background-color: #fff;
+ animation: loading 750ms linear infinite;
+ box-sizing: border-box;
+}
+@keyframes loading {
+ 0% {
+  border-color: #f53e33 rgba(245, 62, 51, 0.25) rgba(245, 62, 51, 0.5)
+   rgba(245, 62, 51, 0.75);
+ }
+ 25% {
+  border-color: rgba(245, 62, 51, 0.75) #f53e33 rgba(245, 62, 51, 0.25)
+   rgba(245, 62, 51, 0.5);
+ }
+ 50% {
+  border-color: rgba(245, 62, 51, 0.5) rgba(245, 62, 51, 0.75) #f53e33
+   rgba(245, 62, 51, 0.25);
+ }
+ 75% {
+  border-color: rgba(245, 62, 51, 0.25) rgba(245, 62, 51, 0.5)
+   rgba(245, 62, 51, 0.75) rgba(245, 62, 51, 0.75);
+ }
+ 100% {
+  border-color: #f53e33 rgba(245, 62, 51, 0.25) rgba(245, 62, 51, 0.5)
+   rgba(245, 62, 51, 0.75);
+ }
+}
+.loading_tx {
+ margin: 16px 0 0;
+ font-size: 1.2rem;
+ text-align: center;
+}
+
+/* 都道府県グラフ ========== */
+.pref-graph-box {
+ margin-top: 16px;
+}
+.result-graph {
+ position: relative;
+ padding: 4px;
+ border: 1px solid #bdbdbd;
+ border-radius: 4px;
+ background-color: #fff;
+ box-sizing: border-box;
+ overflow: hidden;
+}
+
+/* 都道府県テーブル ========== */
+.pref-tbl-box {
+ margin-top: 16px;
+ border: 1px solid #bdbdbd;
+ border-radius: 4px;
+ background-color: #fff;
+ box-sizing: border-box;
+ overflow: hidden;
+}
+.pref-tbl {
+ width: 100%;
+ font-size: 1.4rem;
+}
+
+.pref-tbl_row.is-hd {
+ border-bottom: 1px solid #e0e0e0;
+}
+.pref-tbl_cell.is-hd {
+ font-size: 1.2rem;
+ text-align: center;
+ padding: 4px;
+ color: #989898;
+ box-sizing: border-box;
+}
+
+.pref-tbl_row.is-bd {
+ border-bottom: 1px dotted #bdbdbd;
+}
+.pref-tbl_bd > .pref-tbl_row.is-bd:nth-of-type(even) {
+ background-color: #f5f5f5;
+}
+.pref-tbl_bd > .pref-tbl_row.is-bd:last-of-type {
+ border-bottom: none;
+}
+.pref-tbl_cell.is-bd {
+ padding: 4px 8px;
+ box-sizing: border-box;
+}
+
+.pref-tbl_cell.is-bd.is-num {
+ white-space: nowrap;
+ font-size: 1.2rem;
+ color: #989898;
+ width: 10%;
+ text-align: center;
+}
+.pref-tbl_cell.is-pref {
+ width: 20%;
+ white-space: nowrap;
+}
+.pref-tbl_cell.is-cases {
+ width: 35%;
+ white-space: nowrap;
+}
+.pref-tbl_cell.is-deaths {
+ width: 35%;
+ white-space: nowrap;
+}
+
+/* メッセージ ========== */
+.mes-box {
+ margin-top: 16px;
+ padding-top: 16px;
+ border-top: 1px solid #e0e0e0;
+}
+.mes_tx {
+ margin: 0;
+}
+.mes_tx + .mes_tx {
+ margin-top: 8px;
 }

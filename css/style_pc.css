@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 768px) {
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6,
+ dl,
+ dt,
+ dd,
+ p,
+ blockquote,
+ ul,
+ ol,
+ li {
+  font-size: 1.6rem;
+ }
+
+ /* サイト内共通 ========== */
+ /* obj */
+ .sp-obj {
+  display: none;
+ }
+
+ .pc-obj {
+  display: block;
+ }
+
+ /* inner */
+ .inner {
+  padding: 0 16px;
+ }
+
+ /* ヘッダー ========== */
+
+ /* フッター ========== */
+ .ft-wrap {
+  margin-top: 80px;
+ }
+ .ft-copy-box {
+  padding: 40px 0;
+ }
+
+ /* ページタイトル ========== */
+ .page-ttl {
+  padding: 40px 0 32px;
+ }
+ .page-ttl_tx {
+  font-size: 3.2rem;
+ }
+
+ /* 合計数 ========== */
+ .total-num {
+  display: flex;
+ }
+
+ .total-num_item {
+  width: 50%;
+ }
+
+ .total-num_item + .total-num_item {
+  margin-top: 0;
+  margin-left: 16px;
+ }
+
+ /* 都道府県テーブル ========== */
+ .pref-tbl {
+  font-size: 1.6rem;
+ }
+ .pref-tbl_cell.is-hd {
+  font-size: 1.4rem;
+ }
+ .pref-tbl_cell.is-bd.is-num {
+  font-size: 1.4rem;
+ }
+}

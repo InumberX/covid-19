@@ -4,10 +4,15 @@
 function initMixin() {
  return {
   // データ
-  data: function() {
+  data: function () {
    return {};
   },
   // 各処理
-  methods: {}
+  methods: {
+   // スクロールさせる処理
+   scrollPage: function (target) {
+    actSmoothScroll(target);
+   },
+  },
  };
 }
