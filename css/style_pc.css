@@ -34,6 +34,9 @@
  }
 
  /* ヘッダー ========== */
+ .hd-menu_item {
+  width: 25%;
+ }
 
  /* フッター ========== */
  .ft-wrap {
@@ -49,6 +52,10 @@
  }
  .page-ttl_tx {
   font-size: 3.2rem;
+ }
+ .page-ttl_img {
+  width: 320px;
+  height: 50px;
  }
 
  /* 合計数 ========== */

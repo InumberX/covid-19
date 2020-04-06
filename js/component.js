@@ -1,8 +1,57 @@
 /*------------------------------------------
+ Vue設定
+--------------------------------------------*/
+// Vueストア
+let store = '';
+
+// ミックスイン
+let mixin = '';
+
+/*------------------------------------------
  コンポーネント
 --------------------------------------------*/
 // ミックスイン定義
-let componentMixin = initMixin();
+mixin = initMixin();
+
+// ストアを初期化
+store = new Vuex.Store(initStore());
+
+// ヘッダー内メニュー
+Vue.component('v-hd-menu-cnt', {
+ props: {
+  items: [],
+ },
+ mixins: [mixin],
+ store: store,
+ template:
+  '<div class="hd-menu-cnt-wrap">' +
+  '<div class="hd-menu-cnt-box" v-if="store.state.isModal" v-cloak @click.self="closeModal()">' +
+  '<div class="hd-menu-cnt">' +
+  '<button title="閉じる" aria-label="閉じる" class="hd-menu-cnt_top-close-btn" @click="closeModal()">' +
+  '<i class="stl-icon is-cross"></i>' +
+  '</button>' +
+  '<div class="hd-menu-cnt_inner">' +
+  '<ul class="hd-menu_items">' +
+  '<li class="hd-menu_item" v-for="(item, i) in items" :key="item.id">' +
+  '<label class="frm_lb is-chk">' +
+  '<input type="checkbox" name="pref" class="frm_chk" :value="item.val" v-model="store.state.checkedPref">' +
+  '<span class="frm_chk-tx">' +
+  '<i class="frm_chk-faker"></i>{{ item.tx }}' +
+  '</span>' +
+  '</label>' +
+  '</li>' +
+  '</ul>' +
+  '<div class="hd-menu-cnt_btm-box">' +
+  '<div class="hd-menu-cnt_btm-close-btn-box">' +
+  '<button class="hd-menu-cnt_btm-close-btn" @click="closeModal()">閉じる</button>' +
+  '</div>' +
+  '</div>' +
+  '</div><!-- /.hd-menu-cnt_inner -->' +
+  '</div><!-- /.hd-menu-cnt -->' +
+  '</div><!-- /.hd-menu-cnt-box -->' +
+  '<div class="hd-overlay" v-if="store.state.isModal"></div>' +
+  '</div>',
+});
 
 // 合計数
 Vue.component('v-total-num', {
@@ -22,6 +71,7 @@ Vue.component('v-total-num', {
 });
 
 // 各都道府県グラフ
+let prefGraph = null;
 Vue.component('v-pref-graph', {
  props: {
   data: [],
@@ -72,8 +122,12 @@ Vue.component('v-pref-graph', {
     '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
    Chart.defaults.global.defaultFontSize = 10;
 
+   if (prefGraph) {
+    prefGraph.destroy();
+   }
+
    const ctx = document.getElementById('pref-graph');
-   const prefGraph = new Chart(ctx, {
+   prefGraph = new Chart(ctx, {
     type: 'bar',
     data: this.grafData,
     options: {

@@ -1,3 +1,7 @@
+<?php
+include_once('./php/env.php');
+include_once('./php/functions.php');
+?>
 <!doctype html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 
@@ -19,18 +23,19 @@
  <meta property="og:title" content="新型コロナウイルス感染情報 | COVID-19 Info Japan">
  <meta property="og:type" content="website">
  <meta property="og:url" content="https://afterworks.jp/tools/covid-19_japan/">
- <meta property="og:image" content="https://afterworks.jp/img/tools/covid-19_japan/img_og_1.png">
+ <meta property="og:image" content="https://afterworks.jp/tools/covid-19_japan/img/img_og_1.png">
  <meta property="og:site_name" content="新型コロナウイルス感染情報 | COVID-19 Info Japan">
  <meta property="og:description" content="日本を対象とした新型コロナウイルスの感染者、死亡者数などの情報を閲覧できます。">
  <meta name="twitter:card" content="summary">
  <meta name="twitter:site" content="@InumberX">
  <meta name="twitter:description" content="日本を対象とした新型コロナウイルスの感染者、死亡者数などの情報を閲覧できます。">
- <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
- <link rel="icon" type="image/png" href="/img/favicon.png">
- <link rel="apple-touch-icon" href="/img/favicon.png">
+ <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico">
+ <link rel="icon" type="image/png" href="./img/favicon.png">
+ <link rel="apple-touch-icon" href="./img/favicon.png">
  <link rel="canonical" href="https://afterworks.jp/tools/covid-19_japan/">
- <link rel="stylesheet" href="./css/style.css" class="cmn-css">
- <link rel="stylesheet" href="./css/style_pc.css" class="pc-css">
+ <link rel="stylesheet" href="./css/style.css?v=<?php echo getFileUpdateDate('/css/style.css'); ?>" class="cmn-css">
+ <link rel="stylesheet" href="./css/style_pc.css?v=<?php echo getFileUpdateDate('/css/style_pc.css'); ?>"
+  class="pc-css">
 </head>
 
 <body>
@@ -41,13 +46,14 @@
    <div class="hd-menu-wrap">
     <div class="inner">
      <div class="hd-menu">
-      <button class="refine-btn">絞り込み</button>
+      <button class="refine-btn" @click="openModal()">絞り込み</button>
       <button class="page-top-btn" @click="scrollPage('body')">
        <span class="page-top-tx">PAGE TOP</span>
       </button>
      </div>
     </div><!-- /.inner -->
    </div><!-- /.hd-menu-wrap -->
+   <v-hd-menu-cnt :items="prefCheck"></v-hd-menu-cnt>
   </header>
 
   <main class="main-wrap">
@@ -57,7 +63,9 @@
      <div class="cnt-box page-ttl-box">
       <div class="inner">
        <div class="page-ttl">
-        <h1 class="page-ttl_tx">COVID-19 Info Japan</h1>
+        <h1 class="page-ttl_tx">
+         <img src="./img/img_logo.svg" alt="COVID-19 Info Japan" class="page-ttl_img">
+        </h1>
        </div>
       </div>
      </div><!-- /.cnt-box -->
@@ -76,13 +84,13 @@
 
      <div class="cnt-box">
       <div class="inner">
-       <v-pref-graph :data="dataPref"></v-pref-graph>
+       <v-pref-graph :data="outputDataPref"></v-pref-graph>
       </div>
      </div><!-- /.cnt-box -->
 
      <div class="cnt-box">
       <div class="inner">
-       <v-pref-tbl :data="dataPref"></v-pref-tbl>
+       <v-pref-tbl :data="outputDataPref"></v-pref-tbl>
       </div>
      </div><!-- /.cnt-box -->
 
@@ -126,7 +134,8 @@
     <div class="inner">
      <div class="ft-copy-box">
       <p class="ft-copy">
-       <small class="ft-copy_tx">&copy; <i class="ft-copy_year" v-cloak>2020</i> N/NE, All rights reserved.</small>
+       <small class="ft-copy_tx">&copy; <i class="ft-copy_year"><?php echo $nowYear; ?></i> N/NE, All rights
+        reserved.</small>
       </p>
      </div>
     </div><!-- /.inner -->
@@ -135,17 +144,25 @@
 
  </div><!-- /.wrap-all -->
 
- <script src="./js/lib/promise.polyfills.min.js" defer></script>
- <script src="./js/lib/smooth-scroll.polyfills.min.js" defer></script>
- <script src="./js/lib/chart.min.js" defer></script>
- <script src="./js/lib/axios.min.js" defer></script>
- <script src="./js/lib/vue.min.js" defer></script>
- <script src="./js/lib/vuex.js" defer></script>
- <script src="./js/utils.js" defer></script>
- <script src="./js/mixin.js" defer></script>
- <script src="./js/store.js" defer></script>
- <script src="./js/component.js" defer></script>
- <script src="./js/common.js" defer></script>
+ <script>
+  const nowYear = '<?php echo $nowYear ?>';
+  const nowMonth = '<?php echo $nowMonth ?>';
+  const nowDate = '<?php echo $nowDate ?>';
+ </script>
+ <script src="./js/lib/promise.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/promise.polyfills.min.js'); ?>"
+  defer></script>
+ <script
+  src="./js/lib/smooth-scroll.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/smooth-scroll.polyfills.min.js'); ?>"
+  defer></script>
+ <script src="./js/lib/chart.min.js?v=<?php echo getFileUpdateDate('/js/lib/chart.min.js'); ?>" defer></script>
+ <script src="./js/lib/axios.min.js?v=<?php echo getFileUpdateDate('/js/lib/axios.min.js'); ?>" defer></script>
+ <script src="./js/lib/vue.min.js?v=<?php echo getFileUpdateDate('/js/lib/vue.min.js'); ?>" defer></script>
+ <script src="./js/lib/vuex.js?v=<?php echo getFileUpdateDate('/js/lib/vuex.js'); ?>" defer></script>
+ <script src="./js/utils.js?v=<?php echo getFileUpdateDate('/js/utils.js'); ?>" defer></script>
+ <script src="./js/mixin.js?v=<?php echo getFileUpdateDate('/js/mixin.js'); ?>" defer></script>
+ <script src="./js/store.js?v=<?php echo getFileUpdateDate('/js/store.js'); ?>" defer></script>
+ <script src="./js/component.js?v=<?php echo getFileUpdateDate('/js/component.js'); ?>" defer></script>
+ <script src="./js/common.js?v=<?php echo getFileUpdateDate('/js/common.js'); ?>" defer></script>
 
 </body>
 

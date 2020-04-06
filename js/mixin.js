@@ -13,6 +13,12 @@ function initMixin() {
    scrollPage: function (target) {
     actSmoothScroll(target);
    },
+   openModal: function () {
+    store.commit('setIsModal', true);
+   },
+   closeModal: function () {
+    store.commit('setIsModal', false);
+   },
   },
  };
 }
