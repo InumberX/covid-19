@@ -23,14 +23,25 @@ Vue.component('v-hd-menu-cnt', {
  },
  mixins: [mixin],
  store: store,
+ methods: {
+  reset: function () {
+   store.commit('setCheckedPref', []);
+  },
+ },
  template:
   '<div class="hd-menu-cnt-wrap">' +
+  '<transition name="fade">' +
   '<div class="hd-menu-cnt-box" v-if="store.state.isModal" v-cloak @click.self="closeModal()">' +
   '<div class="hd-menu-cnt">' +
   '<button title="閉じる" aria-label="閉じる" class="hd-menu-cnt_top-close-btn" @click="closeModal()">' +
   '<i class="stl-icon is-cross"></i>' +
   '</button>' +
   '<div class="hd-menu-cnt_inner">' +
+  '<div class="hd-menu-cnt_top-box">' +
+  '<div class="hd-menu-cnt_reset-btn-box">' +
+  '<button class="hd-menu-cnt_reset-btn" @click="reset()"><i class="icon is-reset"></i>リセット</button>' +
+  '</div>' +
+  '</div>' +
   '<ul class="hd-menu_items">' +
   '<li class="hd-menu_item" v-for="(item, i) in items" :key="item.id">' +
   '<label class="frm_lb is-chk">' +
@@ -49,7 +60,10 @@ Vue.component('v-hd-menu-cnt', {
   '</div><!-- /.hd-menu-cnt_inner -->' +
   '</div><!-- /.hd-menu-cnt -->' +
   '</div><!-- /.hd-menu-cnt-box -->' +
+  '</transition>' +
+  '<transition name="fade">' +
   '<div class="hd-overlay" v-if="store.state.isModal"></div>' +
+  '</transition>' +
   '</div>',
 });
 

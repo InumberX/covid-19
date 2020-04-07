@@ -42,11 +42,11 @@ include_once('./php/functions.php');
 
  <div class="wrap-all" id="app">
 
-  <header class="hd-wrap" id="header">
+  <header class="hd-wrap" id="header" v-cloak>
    <div class="hd-menu-wrap">
     <div class="inner">
      <div class="hd-menu">
-      <button class="refine-btn" @click="openModal()">絞り込み</button>
+      <button class="refine-btn" @click="openModal()"><i class="icon is-search"></i>{{ refineBtnTx }}</button>
       <button class="page-top-btn" @click="scrollPage('body')">
        <span class="page-top-tx">PAGE TOP</span>
       </button>

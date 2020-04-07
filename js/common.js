@@ -26,6 +26,7 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    casesNum: 0,
    deathsNum: 0,
    prefCheck: [],
+   refineBtnTx: '絞り込み',
   },
   // 各処理
   methods: {
@@ -47,6 +48,7 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
        self.dataPref = data;
        self.initPrefCheck();
        self.updateDataPref();
+       self.getCheckedPref();
        store.commit('setPageStatus', 'success');
       }
       // 失敗した場合
@@ -148,6 +150,13 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
   watch: {
    checkedPref: function () {
     this.updateDataPref();
+    this.setCheckedPref();
+
+    if (store.state.checkedPref.length > 0) {
+     this.refineBtnTx = '絞り込み中';
+    } else {
+     this.refineBtnTx = '絞り込み';
+    }
    },
   },
   // インスタンスが作成された後に実行する処理
