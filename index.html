@@ -96,6 +96,13 @@ include_once('./php/functions.php');
 
      <div class="cnt-box">
       <div class="inner">
+       <v-cnt-ttl ttl="全国の感染者/死亡者推移"></v-cnt-ttl>
+       <v-history-graph :data="dataHistory"></v-history-graph>
+      </div>
+     </div><!-- /.cnt-box -->
+
+     <div class="cnt-box">
+      <div class="inner">
        <div class="mes-box is-btm">
         <p class="mes_tx">本サイトに掲載されている情報は誤っている可能性があります。<br>より正確な情報は公的機関などが発表するものを参考にしてください。</p>
        </div>

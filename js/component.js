@@ -211,3 +211,118 @@ Vue.component('v-pref-tbl', {
   '</table>' +
   '</div>',
 });
+
+// 感染者推移グラフ
+let historyGraph = null;
+Vue.component('v-history-graph', {
+ props: {
+  data: [],
+ },
+ data: function () {
+  return {
+   grafData: {
+    labels: [],
+    datasets: [
+     {
+      label: '感染者',
+      data: [],
+      backgroundColor: 'rgba(245, 62, 51, 0.5)',
+     },
+     {
+      label: '死亡者',
+      data: [],
+      backgroundColor: 'rgba(245, 62, 51, 1)',
+     },
+    ],
+   },
+  };
+ },
+ methods: {
+  initGraf: function () {
+   this.grafData.labels = [];
+   for (
+    let i = 0, iLength = this.grafData.datasets.length;
+    i < iLength;
+    i = (i + 1) | 0
+   ) {
+    this.grafData.datasets[i].data = [];
+   }
+
+   for (
+    let i = this.data.length - 15, iLength = this.data.length;
+    i < iLength;
+    i = (i + 1) | 0
+   ) {
+    const thisData = this.data[i];
+    const label = thisData.date;
+    const cases = thisData.positive;
+    const deaths = thisData.death;
+
+    this.grafData.labels.push(label);
+    this.grafData.datasets[0].data.push(cases);
+    this.grafData.datasets[1].data.push(deaths);
+   }
+
+   Chart.defaults.global.defaultFontColor = '#393939';
+   Chart.defaults.global.defaultFontFamily =
+    '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
+   Chart.defaults.global.defaultFontSize = 10;
+
+   if (historyGraph) {
+    historyGraph.destroy();
+   }
+
+   const ctx = document.getElementById('history-graph');
+   historyGraph = new Chart(ctx, {
+    type: 'line',
+    data: this.grafData,
+    options: {
+     title: {
+      display: false,
+      text: '感染者/死亡者数の推移',
+     },
+     responsive: true,
+     maintainAspectRatio: false,
+     scales: {
+      yAxes: [
+       {
+        ticks: {
+         stepSize: 20,
+         callback: function (value, index, values) {
+          return value + '人';
+         },
+        },
+       },
+      ],
+     },
+    },
+   });
+   historyGraph.canvas.parentNode.style.height = '320px';
+  },
+ },
+ mounted: function () {
+  if (this.data.length > 0) {
+   this.initGraf();
+  }
+ },
+ watch: {
+  data: function () {
+   this.initGraf();
+  },
+ },
+ template:
+  '<div class="history-graph-box">' +
+  '<div class="history-graph result-graph">' +
+  '<canvas class="result-graph_canvas" id="history-graph"></canvas>' +
+  '</div>' +
+  '</div>',
+});
+
+// コンテンツタイトル
+Vue.component('v-cnt-ttl', {
+ props: {
+  ttl: '',
+ },
+ template:
+  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx">{{ ttl }}</h2>' + '</div>',
+});

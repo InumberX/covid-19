@@ -27,6 +27,7 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    deathsNum: 0,
    prefCheck: [],
    refineBtnTx: '絞り込み',
+   dataHistory: [],
   },
   // 各処理
   methods: {
@@ -75,6 +76,25 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
       // データの取得に成功した場合
       if (status === 'success') {
        self.dataTotal = data;
+      }
+     })
+     .catch(function (err) {});
+   },
+   // 感染者推移を取得する処理
+   getDataHistory: function () {
+    let self = this;
+    axios
+     .post('api/get_data_history.php?v=' + getDateTime())
+     .then(function (res) {
+      const resData = res.data.result;
+      const status = resData.status;
+      const data = resData.data;
+
+      self.dataHistory = [];
+
+      // データの取得に成功した場合
+      if (status === 'success') {
+       self.dataHistory = data;
       }
      })
      .catch(function (err) {});
@@ -163,6 +183,8 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
   created: function () {
    // 県ごとのデータを取得する
    this.getDataPref();
+   // 感染者推移を取得する
+   this.getDataHistory();
   },
   // インスタンスがマウントされた後に実行する処理
   mounted: function () {},

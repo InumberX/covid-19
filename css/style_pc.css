@@ -82,4 +82,12 @@
  .pref-tbl_cell.is-bd.is-num {
   font-size: 1.4rem;
  }
+
+ /* コンテンツタイトル ========== */
+ .cnt-ttl {
+  margin-top: 32px;
+ }
+ .cnt-ttl_tx {
+  font-size: 1.8rem;
+ }
 }

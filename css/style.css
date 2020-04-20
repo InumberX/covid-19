@@ -807,6 +807,7 @@ a.hd-menu-cnt_btm-close-btn {
 .pref-tbl_cell.is-bd {
  padding: 4px 8px;
  box-sizing: border-box;
+ text-align: center;
 }
 
 .pref-tbl_cell.is-bd.is-num {
@@ -839,5 +840,20 @@ a.hd-menu-cnt_btm-close-btn {
  margin: 0;
 }
 .mes_tx + .mes_tx {
+ margin-top: 8px;
+}
+
+/* コンテンツタイトル ========== */
+.cnt-ttl {
+ margin: 24px auto 0;
+}
+.cnt-ttl_tx {
+ font-size: 1.6rem;
+ font-weight: bold;
+ margin: 0;
+}
+
+/* 推移グラフ ========== */
+.history-graph-box {
  margin-top: 8px;
 }
