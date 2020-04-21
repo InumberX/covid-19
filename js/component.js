@@ -67,6 +67,15 @@ Vue.component('v-hd-menu-cnt', {
   '</div>',
 });
 
+// コンテンツタイトル
+Vue.component('v-cnt-ttl', {
+ props: {
+  ttl: '',
+ },
+ template:
+  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx">{{ ttl }}</h2>' + '</div>',
+});
+
 // 合計数
 Vue.component('v-total-num', {
  props: {
@@ -318,11 +327,104 @@ Vue.component('v-history-graph', {
   '</div>',
 });
 
-// コンテンツタイトル
-Vue.component('v-cnt-ttl', {
+// 感染者予測グラフ
+let predictGraph = null;
+Vue.component('v-predict-graph', {
  props: {
-  ttl: '',
+  data: [],
+ },
+ data: function () {
+  return {
+   grafData: {
+    labels: [],
+    datasets: [
+     {
+      label: '感染者',
+      data: [],
+      backgroundColor: 'rgba(245, 62, 51, 0.5)',
+     },
+     {
+      label: '死亡者',
+      data: [],
+      backgroundColor: 'rgba(245, 62, 51, 1)',
+     },
+    ],
+   },
+  };
+ },
+ methods: {
+  initGraf: function () {
+   this.grafData.labels = [];
+   for (
+    let i = 0, iLength = this.grafData.datasets.length;
+    i < iLength;
+    i = (i + 1) | 0
+   ) {
+    this.grafData.datasets[i].data = [];
+   }
+
+   for (let i = 0, iLength = this.data.length; i < iLength; i = (i + 1) | 0) {
+    const thisData = this.data[i];
+    const label = thisData.date;
+    const cases = parseInt(thisData.positive, 10);
+    const deaths = parseInt(thisData.death, 10);
+
+    this.grafData.labels.push(label);
+    this.grafData.datasets[0].data.push(cases);
+    this.grafData.datasets[1].data.push(deaths);
+   }
+
+   Chart.defaults.global.defaultFontColor = '#393939';
+   Chart.defaults.global.defaultFontFamily =
+    '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
+   Chart.defaults.global.defaultFontSize = 10;
+
+   if (predictGraph) {
+    predictGraph.destroy();
+   }
+
+   const ctx = document.getElementById('predict-graph');
+   predictGraph = new Chart(ctx, {
+    type: 'line',
+    data: this.grafData,
+    options: {
+     title: {
+      display: false,
+      text: '感染者/死亡者数の予測',
+     },
+     responsive: true,
+     maintainAspectRatio: false,
+     scales: {
+      yAxes: [
+       {
+        ticks: {
+         stepSize: 20,
+         callback: function (value, index, values) {
+          return value + '人';
+         },
+        },
+       },
+      ],
+     },
+    },
+   });
+   predictGraph.canvas.parentNode.style.height = '320px';
+  },
+ },
+ mounted: function () {
+  if (this.data.length > 0) {
+   this.initGraf();
+  }
+ },
+ watch: {
+  data: function () {
+   this.initGraf();
+  },
  },
  template:
-  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx">{{ ttl }}</h2>' + '</div>',
+  '<div class="predict-graph-box">' +
+  '<div class="predict-graph result-graph">' +
+  '<canvas class="result-graph_canvas" id="predict-graph"></canvas>' +
+  '</div>' +
+  '</div>',
 });

@@ -57,8 +57,8 @@ include_once('./php/functions.php');
   </header>
 
   <main class="main-wrap">
-   <section class="main-box">
 
+   <div class="main-box">
     <div class="cnt-wrap">
      <div class="cnt-box page-ttl-box">
       <div class="inner">
@@ -70,8 +70,16 @@ include_once('./php/functions.php');
       </div>
      </div><!-- /.cnt-box -->
     </div><!-- /.cnt-wrap -->
+   </div><!-- /.main-box -->
 
-    <div v-if="store.state.pageStatus === 'success'" v-cloak class="cnt-wrap">
+   <div v-if="store.state.pageStatus === 'success'" v-cloak class="main-box">
+    <section class="cnt-wrap">
+
+     <div class="cnt-box cnt-ttl-box">
+      <div class="inner">
+       <v-cnt-ttl ttl="各都道府県の感染者/死亡者合計"></v-cnt-ttl>
+      </div>
+     </div><!-- /.cnt-box -->
 
      <div class="cnt-box total-num-box">
       <div class="inner">
@@ -94,13 +102,41 @@ include_once('./php/functions.php');
       </div>
      </div><!-- /.cnt-box -->
 
-     <div class="cnt-box">
+    </section>
+
+    <section class="cnt-wrap">
+
+     <div class="cnt-box cnt-ttl-box">
       <div class="inner">
        <v-cnt-ttl ttl="全国の感染者/死亡者推移"></v-cnt-ttl>
+      </div>
+     </div><!-- /.cnt-box -->
+
+     <div class="cnt-box">
+      <div class="inner">
        <v-history-graph :data="dataHistory"></v-history-graph>
       </div>
      </div><!-- /.cnt-box -->
 
+    </section>
+
+    <section class="cnt-wrap">
+
+     <div class="cnt-box cnt-ttl-box">
+      <div class="inner">
+       <v-cnt-ttl ttl="全国の感染者/死亡者予測"></v-cnt-ttl>
+      </div>
+     </div><!-- /.cnt-box -->
+
+     <div class="cnt-box">
+      <div class="inner">
+       <v-predict-graph :data="dataPredict"></v-predict-graph>
+      </div>
+     </div><!-- /.cnt-box -->
+
+    </section>
+
+    <div class="cnt-wrap">
      <div class="cnt-box">
       <div class="inner">
        <div class="mes-box is-btm">
@@ -108,9 +144,12 @@ include_once('./php/functions.php');
        </div>
       </div>
      </div><!-- /.cnt-box -->
-
     </div><!-- /.cnt-wrap -->
-    <div class="cnt-wrap" v-else-if="store.state.pageStatus === 'loading'">
+
+   </div><!-- /.main-box -->
+
+   <div v-else-if="store.state.pageStatus === 'loading'" class="main-box">
+    <div class="cnt-wrap">
      <div class="inner">
       <div class="loading-box">
        <div class="loading"></div>
@@ -118,8 +157,10 @@ include_once('./php/functions.php');
       </div>
      </div>
     </div><!-- /.cnt-wrap -->
-    <div v-else v-cloak class="cnt-wrap">
+   </div><!-- /.main-box -->
 
+   <div v-else v-cloak class="main-box">
+    <div class="cnt-wrap">
      <div class="cnt-box">
       <div class="inner">
        <div class="error-mes-box">
@@ -130,10 +171,9 @@ include_once('./php/functions.php');
        </div>
       </div>
      </div><!-- /.cnt-box -->
-
     </div><!-- /.cnt-wrap -->
+   </div><!-- /.main-box -->
 
-   </section>
   </main>
 
   <footer class="ft-wrap" id="footer">

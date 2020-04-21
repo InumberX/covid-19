@@ -252,6 +252,14 @@ th {
  box-sizing: border-box;
 }
 
+/* cnt-box */
+.cnt-box + .cnt-box {
+ margin-top: 16px;
+}
+.cnt-box.cnt-ttl-box + .cnt-box {
+ margin-top: 8px;
+}
+
 /* inner */
 .inner {
  margin: 0 auto;
@@ -651,29 +659,18 @@ a.hd-menu-cnt_btm-close-btn {
 .total-num-box {
  position: relative;
 }
-.total-num-box:before {
- content: '';
- background-color: #f53e33;
- width: 100%;
- height: 24px;
- display: block;
- position: absolute;
- left: 0;
- top: 0;
- z-index: 1;
-}
 .total-num_item {
  margin: 0;
  padding: 0;
  display: flex;
  width: 100%;
  box-sizing: border-box;
- border: 1px solid #bdbdbd;
- border-radius: 4px;
+ border-radius: 8px;
  background-color: #fff;
  position: relative;
  z-index: 2;
  overflow: hidden;
+ box-shadow: inset 2px 2px 4px #e6dfdf, inset -2px -2px 4px #f7f7f7;
 }
 .total-num_item + .total-num_item {
  margin-top: 8px;
@@ -685,8 +682,9 @@ a.hd-menu-cnt_btm-close-btn {
  align-items: center;
  width: 100px;
  box-sizing: border-box;
- border-right: 1px solid #bdbdbd;
+ border-right: 1px solid rgba(189, 189, 189, 0.4);
  background-color: #f5f5f5;
+ box-shadow: inset 2px 2px 4px #e6dfdf, inset 0px -2px 6px -4px #ffffff;
 }
 .total-num_cnt {
  margin: 0;
@@ -757,27 +755,24 @@ a.hd-menu-cnt_btm-close-btn {
 }
 
 /* 都道府県グラフ ========== */
-.pref-graph-box {
- margin-top: 16px;
-}
 .result-graph {
  position: relative;
- padding: 4px;
- border: 1px solid #bdbdbd;
- border-radius: 4px;
+ padding: 8px;
+ border-radius: 8px;
  background-color: #fff;
  box-sizing: border-box;
  overflow: hidden;
+ box-shadow: inset 4px 4px 8px #e6dfdf, inset -4px -4px 8px #f7f7f7;
 }
 
 /* 都道府県テーブル ========== */
 .pref-tbl-box {
- margin-top: 16px;
- border: 1px solid #bdbdbd;
- border-radius: 4px;
+ position: relative;
+ border-radius: 8px;
  background-color: #fff;
  box-sizing: border-box;
  overflow: hidden;
+ box-shadow: inset 4px 4px 8px #e6dfdf, inset -4px -4px 8px #f7f7f7;
 }
 .pref-tbl {
  width: 100%;
@@ -790,7 +785,7 @@ a.hd-menu-cnt_btm-close-btn {
 .pref-tbl_cell.is-hd {
  font-size: 1.2rem;
  text-align: center;
- padding: 4px;
+ padding: 12px 4px 2px;
  color: #989898;
  box-sizing: border-box;
 }
@@ -799,7 +794,7 @@ a.hd-menu-cnt_btm-close-btn {
  border-bottom: 1px dotted #bdbdbd;
 }
 .pref-tbl_bd > .pref-tbl_row.is-bd:nth-of-type(even) {
- background-color: #f5f5f5;
+ background-color: rgba(245, 245, 245, 0.5);
 }
 .pref-tbl_bd > .pref-tbl_row.is-bd:last-of-type {
  border-bottom: none;
@@ -832,7 +827,7 @@ a.hd-menu-cnt_btm-close-btn {
 
 /* メッセージ ========== */
 .mes-box {
- margin-top: 16px;
+ margin-top: 24px;
  padding-top: 16px;
  border-top: 1px solid #e0e0e0;
 }
@@ -854,6 +849,3 @@ a.hd-menu-cnt_btm-close-btn {
 }
 
 /* 推移グラフ ========== */
-.history-graph-box {
- margin-top: 8px;
-}

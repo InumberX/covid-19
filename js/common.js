@@ -28,6 +28,7 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    prefCheck: [],
    refineBtnTx: '絞り込み',
    dataHistory: [],
+   dataPredict: [],
   },
   // 各処理
   methods: {
@@ -95,6 +96,25 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
       // データの取得に成功した場合
       if (status === 'success') {
        self.dataHistory = data;
+      }
+     })
+     .catch(function (err) {});
+   },
+   // 感染者予測を取得する処理
+   getDataPredict: function () {
+    let self = this;
+    axios
+     .post('api/get_data_predict.php?v=' + getDateTime())
+     .then(function (res) {
+      const resData = res.data.result;
+      const status = resData.status;
+      const data = resData.data;
+
+      self.dataPredict = [];
+
+      // データの取得に成功した場合
+      if (status === 'success') {
+       self.dataPredict = data;
       }
      })
      .catch(function (err) {});
@@ -185,6 +205,8 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    this.getDataPref();
    // 感染者推移を取得する
    this.getDataHistory();
+   // 感染者予測を取得する処理
+   this.getDataPredict();
   },
   // インスタンスがマウントされた後に実行する処理
   mounted: function () {},

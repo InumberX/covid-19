@@ -83,6 +83,11 @@
   font-size: 1.4rem;
  }
 
+ /* メッセージ ========== */
+ .mes-box {
+  margin-top: 32px;
+ }
+
  /* コンテンツタイトル ========== */
  .cnt-ttl {
   margin-top: 32px;
