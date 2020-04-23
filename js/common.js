@@ -8,6 +8,14 @@ const vMountTarget = '#app';
 let vm = '';
 
 /*------------------------------------------
+ Chart
+--------------------------------------------*/
+Chart.defaults.global.defaultFontColor = '#393939';
+Chart.defaults.global.defaultFontFamily =
+ '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
+Chart.defaults.global.defaultFontSize = 10;
+
+/*------------------------------------------
  Vue
 --------------------------------------------*/
 if (document.querySelectorAll(vMountTarget).length > 0) {

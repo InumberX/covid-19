@@ -73,7 +73,7 @@ Vue.component('v-cnt-ttl', {
   ttl: '',
  },
  template:
-  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx">{{ ttl }}</h2>' + '</div>',
+  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx" v-html="ttl"></h2>' + '</div>',
 });
 
 // 合計数
@@ -139,11 +139,6 @@ Vue.component('v-pref-graph', {
     this.grafData.datasets[0].data.push(cases);
     this.grafData.datasets[1].data.push(deaths);
    }
-
-   Chart.defaults.global.defaultFontColor = '#393939';
-   Chart.defaults.global.defaultFontFamily =
-    '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
-   Chart.defaults.global.defaultFontSize = 10;
 
    if (prefGraph) {
     prefGraph.destroy();
@@ -272,11 +267,6 @@ Vue.component('v-history-graph', {
     this.grafData.datasets[1].data.push(deaths);
    }
 
-   Chart.defaults.global.defaultFontColor = '#393939';
-   Chart.defaults.global.defaultFontFamily =
-    '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
-   Chart.defaults.global.defaultFontSize = 10;
-
    if (historyGraph) {
     historyGraph.destroy();
    }
@@ -373,11 +363,6 @@ Vue.component('v-predict-graph', {
     this.grafData.datasets[0].data.push(cases);
     this.grafData.datasets[1].data.push(deaths);
    }
-
-   Chart.defaults.global.defaultFontColor = '#393939';
-   Chart.defaults.global.defaultFontFamily =
-    '-apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",HelveticaNeue, "游ゴシック体", YuGothic, "游ゴシック Medium","Yu Gothic Medium", "游ゴシック", "Yu Gothic", Verdana, "メイリオ", Meiryo,sans-serif';
-   Chart.defaults.global.defaultFontSize = 10;
 
    if (predictGraph) {
     predictGraph.destroy();

@@ -36,6 +36,25 @@ include_once('./php/functions.php');
  <link rel="stylesheet" href="./css/style.css?v=<?php echo getFileUpdateDate('/css/style.css'); ?>" class="cmn-css">
  <link rel="stylesheet" href="./css/style_pc.css?v=<?php echo getFileUpdateDate('/css/style_pc.css'); ?>"
   class="pc-css">
+ <script>
+  const nowYear = '<?php echo $nowYear ?>';
+  const nowMonth = '<?php echo $nowMonth ?>';
+  const nowDate = '<?php echo $nowDate ?>';
+ </script>
+ <script src="./js/lib/promise.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/promise.polyfills.min.js'); ?>"
+  defer></script>
+ <script
+  src="./js/lib/smooth-scroll.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/smooth-scroll.polyfills.min.js'); ?>"
+  defer></script>
+ <script src="./js/lib/chart.min.js?v=<?php echo getFileUpdateDate('/js/lib/chart.min.js'); ?>" defer></script>
+ <script src="./js/lib/axios.min.js?v=<?php echo getFileUpdateDate('/js/lib/axios.min.js'); ?>" defer></script>
+ <script src="./js/lib/vue.min.js?v=<?php echo getFileUpdateDate('/js/lib/vue.min.js'); ?>" defer></script>
+ <script src="./js/lib/vuex.js?v=<?php echo getFileUpdateDate('/js/lib/vuex.js'); ?>" defer></script>
+ <script src="./js/utils.js?v=<?php echo getFileUpdateDate('/js/utils.js'); ?>" defer></script>
+ <script src="./js/mixin.js?v=<?php echo getFileUpdateDate('/js/mixin.js'); ?>" defer></script>
+ <script src="./js/store.js?v=<?php echo getFileUpdateDate('/js/store.js'); ?>" defer></script>
+ <script src="./js/component.js?v=<?php echo getFileUpdateDate('/js/component.js'); ?>" defer></script>
+ <script src="./js/common.js?v=<?php echo getFileUpdateDate('/js/common.js'); ?>" defer></script>
 </head>
 
 <body>
@@ -46,9 +65,30 @@ include_once('./php/functions.php');
    <div class="hd-menu-wrap">
     <div class="inner">
      <div class="hd-menu">
-      <button class="refine-btn" @click="openModal()"><i class="icon is-search"></i>{{ refineBtnTx }}</button>
-      <button class="page-top-btn" @click="scrollPage('body')">
-       <span class="page-top-tx">PAGE TOP</span>
+      <ul class="hd-page-link_items">
+       <li class="hd-page-link_item">
+        <button class="page-link-btn is-total" @click="scrollPage('#sec_pref')">
+         <i class="icon is-stats-bars"></i>
+         <span class="page-link-btn_tx">合計</span>
+        </button>
+       </li>
+       <li class="hd-page-link_item">
+        <button class="page-link-btn is-history" @click="scrollPage('#sec_history')">
+         <i class="icon is-stats-dots"></i>
+         <span class="page-link-btn_tx">推移</span>
+        </button>
+       </li>
+       <li class="hd-page-link_item">
+        <button class="page-link-btn is-predict" @click="scrollPage('#sec_predict')">
+         <i class="icon is-stats-dots"></i>
+         <span class="page-link-btn_tx">予測</span>
+        </button>
+       </li>
+       <li class="hd-page-link_item">
+        <button class="page-top-btn" @click="scrollPage('body')">
+         <span class="page-top-tx">PAGE TOP</span>
+       </li>
+      </ul>
       </button>
      </div>
     </div><!-- /.inner -->
@@ -73,11 +113,18 @@ include_once('./php/functions.php');
    </div><!-- /.main-box -->
 
    <div v-if="store.state.pageStatus === 'success'" v-cloak class="main-box">
-    <section class="cnt-wrap">
+    <section class="cnt-wrap" id="sec_pref">
 
      <div class="cnt-box cnt-ttl-box">
       <div class="inner">
-       <v-cnt-ttl ttl="各都道府県の感染者/死亡者合計"></v-cnt-ttl>
+       <dib class="cmn-cnt-box">
+        <dib class="cmn-cnt is-left">
+         <v-cnt-ttl ttl="各都道府県の<br class='sp-obj'>感染者/死亡者合計"></v-cnt-ttl>
+        </dib><!-- /.cmn-cnt -->
+        <dib class="cmn-cnt is-right">
+         <button class="refine-btn" @click="openModal()"><i class="icon is-search"></i>{{ refineBtnTx }}</button>
+        </dib><!-- /.cmn-cnt -->
+       </dib><!-- /.cmn-cnt-box -->
       </div>
      </div><!-- /.cnt-box -->
 
@@ -104,11 +151,17 @@ include_once('./php/functions.php');
 
     </section>
 
-    <section class="cnt-wrap">
+    <section class="cnt-wrap" id="sec_history">
 
      <div class="cnt-box cnt-ttl-box">
       <div class="inner">
-       <v-cnt-ttl ttl="全国の感染者/死亡者推移"></v-cnt-ttl>
+       <dib class="cmn-cnt-box">
+        <dib class="cmn-cnt is-left">
+         <v-cnt-ttl ttl="全国の感染者/<br class='sp-obj'>死亡者推移"></v-cnt-ttl>
+        </dib><!-- /.cmn-cnt -->
+        <dib class="cmn-cnt is-right">
+        </dib><!-- /.cmn-cnt -->
+       </dib><!-- /.cmn-cnt-box -->
       </div>
      </div><!-- /.cnt-box -->
 
@@ -120,11 +173,17 @@ include_once('./php/functions.php');
 
     </section>
 
-    <section class="cnt-wrap">
+    <section class="cnt-wrap" id="sec_predict">
 
      <div class="cnt-box cnt-ttl-box">
       <div class="inner">
-       <v-cnt-ttl ttl="全国の感染者/死亡者予測"></v-cnt-ttl>
+       <dib class="cmn-cnt-box">
+        <dib class="cmn-cnt is-left">
+         <v-cnt-ttl ttl="全国の感染者/<br class='sp-obj'>死亡者予測"></v-cnt-ttl>
+        </dib><!-- /.cmn-cnt -->
+        <dib class="cmn-cnt is-right">
+        </dib><!-- /.cmn-cnt -->
+       </dib><!-- /.cmn-cnt-box -->
       </div>
      </div><!-- /.cnt-box -->
 
@@ -190,26 +249,6 @@ include_once('./php/functions.php');
   </footer>
 
  </div><!-- /.wrap-all -->
-
- <script>
-  const nowYear = '<?php echo $nowYear ?>';
-  const nowMonth = '<?php echo $nowMonth ?>';
-  const nowDate = '<?php echo $nowDate ?>';
- </script>
- <script src="./js/lib/promise.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/promise.polyfills.min.js'); ?>"
-  defer></script>
- <script
-  src="./js/lib/smooth-scroll.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/smooth-scroll.polyfills.min.js'); ?>"
-  defer></script>
- <script src="./js/lib/chart.min.js?v=<?php echo getFileUpdateDate('/js/lib/chart.min.js'); ?>" defer></script>
- <script src="./js/lib/axios.min.js?v=<?php echo getFileUpdateDate('/js/lib/axios.min.js'); ?>" defer></script>
- <script src="./js/lib/vue.min.js?v=<?php echo getFileUpdateDate('/js/lib/vue.min.js'); ?>" defer></script>
- <script src="./js/lib/vuex.js?v=<?php echo getFileUpdateDate('/js/lib/vuex.js'); ?>" defer></script>
- <script src="./js/utils.js?v=<?php echo getFileUpdateDate('/js/utils.js'); ?>" defer></script>
- <script src="./js/mixin.js?v=<?php echo getFileUpdateDate('/js/mixin.js'); ?>" defer></script>
- <script src="./js/store.js?v=<?php echo getFileUpdateDate('/js/store.js'); ?>" defer></script>
- <script src="./js/component.js?v=<?php echo getFileUpdateDate('/js/component.js'); ?>" defer></script>
- <script src="./js/common.js?v=<?php echo getFileUpdateDate('/js/common.js'); ?>" defer></script>
 
 </body>
 
