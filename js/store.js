@@ -8,6 +8,10 @@ function initStore() {
    pageStatus: 'loading',
    checkedPref: [],
    isModal: false,
+   historySeletedDateStart: '',
+   historySeletedDateEnd: '',
+   predictSeletedDateStart: '',
+   predictSeletedDateEnd: '',
   },
   // stateのデータを直接操作するための関数
   mutations: {
@@ -19,6 +23,18 @@ function initStore() {
    },
    setIsModal: function (state, data) {
     state.isModal = data;
+   },
+   setHistorySeletedDateStart: function (state, data) {
+    state.historySeletedDateStart = data;
+   },
+   setHistorySeletedDateEnd: function (state, data) {
+    state.historySeletedDateEnd = data;
+   },
+   setPredictSeletedDateStart: function (state, data) {
+    state.predictSeletedDateStart = data;
+   },
+   setPredictSeletedDateEnd: function (state, data) {
+    state.predictSeletedDateEnd = data;
    },
   },
  };

@@ -16,6 +16,60 @@ Chart.defaults.global.defaultFontFamily =
 Chart.defaults.global.defaultFontSize = 10;
 
 /*------------------------------------------
+ flatpickr
+--------------------------------------------*/
+// 日本語化
+const flatpickrJa = {
+ weekdays: {
+  shorthand: ['日', '月', '火', '水', '木', '金', '土'],
+  longhand: [
+   '日曜日',
+   '月曜日',
+   '火曜日',
+   '水曜日',
+   '木曜日',
+   '金曜日',
+   '土曜日',
+  ],
+ },
+ months: {
+  shorthand: [
+   '1月',
+   '2月',
+   '3月',
+   '4月',
+   '5月',
+   '6月',
+   '7月',
+   '8月',
+   '9月',
+   '10月',
+   '11月',
+   '12月',
+  ],
+  longhand: [
+   '1月',
+   '2月',
+   '3月',
+   '4月',
+   '5月',
+   '6月',
+   '7月',
+   '8月',
+   '9月',
+   '10月',
+   '11月',
+   '12月',
+  ],
+ },
+};
+
+// 週初めの設定
+flatpickr.l10ns.default.firstDayOfWeek = 0;
+// 言語設定
+flatpickr.localize(flatpickrJa);
+
+/*------------------------------------------
  Vue
 --------------------------------------------*/
 if (document.querySelectorAll(vMountTarget).length > 0) {
@@ -37,6 +91,12 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    refineBtnTx: '絞り込み',
    dataHistory: [],
    dataPredict: [],
+   historyMinDate: '',
+   historyMaxDate: '',
+   isLoadHistory: false,
+   predictMinDate: '',
+   predictMaxDate: '',
+   isLoadPredict: false,
   },
   // 各処理
   methods: {
@@ -98,12 +158,34 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
       const resData = res.data.result;
       const status = resData.status;
       const data = resData.data;
+      const dataLength = data.length;
 
       self.dataHistory = [];
 
       // データの取得に成功した場合
       if (status === 'success') {
+       // 日付のフォーマットを変更
+       for (let i = 0; i < dataLength; i = (i + 1) | 0) {
+        data[i].date = String(data[i].date).replace(
+         /^(\d{4})(\d{2})(\d{2})/,
+         '$1/$2/$3'
+        );
+       }
+
+       // カレンダー設定
+       self.historyMinDate = data[0].date;
+       self.historyMaxDate = data[dataLength - 1].date;
+       if (dataLength >= 14) {
+        store.commit('setHistorySeletedDateStart', data[dataLength - 15].date);
+       } else {
+        store.commit('setHistorySeletedDateStart', data[0].date);
+       }
+       store.commit('setHistorySeletedDateEnd', data[dataLength - 1].date);
+
+       // 表示用データにコピー
        self.dataHistory = data;
+
+       self.isLoadHistory = true;
       }
      })
      .catch(function (err) {});
@@ -117,12 +199,34 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
       const resData = res.data.result;
       const status = resData.status;
       const data = resData.data;
+      const dataLength = data.length;
 
       self.dataPredict = [];
 
       // データの取得に成功した場合
       if (status === 'success') {
+       // 日付のフォーマットを変更
+       for (let i = 0; i < dataLength; i = (i + 1) | 0) {
+        data[i].date = String(data[i].date).replace(
+         /^(\d{4})(\d{2})(\d{2})/,
+         '$1/$2/$3'
+        );
+       }
+
+       // カレンダー設定
+       self.predictMinDate = data[0].date;
+       self.predictMaxDate = data[dataLength - 1].date;
+       store.commit('setPredictSeletedDateStart', data[0].date);
+       if (dataLength >= 14) {
+        store.commit('setPredictSeletedDateEnd', data[14].date);
+       } else {
+        store.commit('setPredictSeletedDateEnd', data[dataLength - 1].date);
+       }
+
+       // 表示用データにコピー
        self.dataPredict = data;
+
+       self.isLoadPredict = true;
       }
      })
      .catch(function (err) {});

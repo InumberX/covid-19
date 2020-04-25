@@ -73,7 +73,9 @@ Vue.component('v-cnt-ttl', {
   ttl: '',
  },
  template:
-  '<div class="cnt-ttl">' + '<h2 class="cnt-ttl_tx" v-html="ttl"></h2>' + '</div>',
+  '<div class="cnt-ttl">' +
+  '<h2 class="cnt-ttl_tx" v-html="ttl"></h2>' +
+  '</div>',
 });
 
 // 合計数
@@ -219,6 +221,7 @@ Vue.component('v-pref-tbl', {
 // 感染者推移グラフ
 let historyGraph = null;
 Vue.component('v-history-graph', {
+ store: store,
  props: {
   data: [],
  },
@@ -244,6 +247,7 @@ Vue.component('v-history-graph', {
  methods: {
   initGraf: function () {
    this.grafData.labels = [];
+   let isAdd = false;
    for (
     let i = 0, iLength = this.grafData.datasets.length;
     i < iLength;
@@ -252,19 +256,26 @@ Vue.component('v-history-graph', {
     this.grafData.datasets[i].data = [];
    }
 
-   for (
-    let i = this.data.length - 15, iLength = this.data.length;
-    i < iLength;
-    i = (i + 1) | 0
-   ) {
+   for (let i = 0, iLength = this.data.length; i < iLength; i = (i + 1) | 0) {
     const thisData = this.data[i];
     const label = thisData.date;
-    const cases = thisData.positive;
-    const deaths = thisData.death;
 
-    this.grafData.labels.push(label);
-    this.grafData.datasets[0].data.push(cases);
-    this.grafData.datasets[1].data.push(deaths);
+    if (label === store.state.historySeletedDateStart) {
+     isAdd = true;
+    }
+
+    if (isAdd) {
+     const cases = thisData.positive;
+     const deaths = thisData.death;
+
+     this.grafData.labels.push(label);
+     this.grafData.datasets[0].data.push(cases);
+     this.grafData.datasets[1].data.push(deaths);
+    }
+
+    if (label === store.state.historySeletedDateEnd) {
+     break;
+    }
    }
 
    if (historyGraph) {
@@ -304,8 +315,22 @@ Vue.component('v-history-graph', {
    this.initGraf();
   }
  },
+ computed: {
+  seletedDateStart: function () {
+   return store.state.historySeletedDateStart;
+  },
+  seletedDateEnd: function () {
+   return store.state.historySeletedDateEnd;
+  },
+ },
  watch: {
   data: function () {
+   this.initGraf();
+  },
+  seletedDateStart: function () {
+   this.initGraf();
+  },
+  seletedDateEnd: function () {
    this.initGraf();
   },
  },
@@ -320,8 +345,11 @@ Vue.component('v-history-graph', {
 // 感染者予測グラフ
 let predictGraph = null;
 Vue.component('v-predict-graph', {
+ store: store,
  props: {
   data: [],
+  seletedDateStart: '',
+  seletedDateEnd: '',
  },
  data: function () {
   return {
@@ -345,6 +373,7 @@ Vue.component('v-predict-graph', {
  methods: {
   initGraf: function () {
    this.grafData.labels = [];
+   let isAdd = false;
    for (
     let i = 0, iLength = this.grafData.datasets.length;
     i < iLength;
@@ -356,12 +385,23 @@ Vue.component('v-predict-graph', {
    for (let i = 0, iLength = this.data.length; i < iLength; i = (i + 1) | 0) {
     const thisData = this.data[i];
     const label = thisData.date;
-    const cases = parseInt(thisData.positive, 10);
-    const deaths = parseInt(thisData.death, 10);
 
-    this.grafData.labels.push(label);
-    this.grafData.datasets[0].data.push(cases);
-    this.grafData.datasets[1].data.push(deaths);
+    if (label === store.state.predictSeletedDateStart) {
+     isAdd = true;
+    }
+
+    if (isAdd) {
+     const cases = thisData.positive;
+     const deaths = thisData.death;
+
+     this.grafData.labels.push(label);
+     this.grafData.datasets[0].data.push(cases);
+     this.grafData.datasets[1].data.push(deaths);
+    }
+
+    if (label === store.state.predictSeletedDateEnd) {
+     break;
+    }
    }
 
    if (predictGraph) {
@@ -401,8 +441,22 @@ Vue.component('v-predict-graph', {
    this.initGraf();
   }
  },
+ computed: {
+  seletedDateStart: function () {
+   return store.state.predictSeletedDateStart;
+  },
+  seletedDateEnd: function () {
+   return store.state.predictSeletedDateEnd;
+  },
+ },
  watch: {
   data: function () {
+   this.initGraf();
+  },
+  seletedDateStart: function () {
+   this.initGraf();
+  },
+  seletedDateEnd: function () {
    this.initGraf();
   },
  },
@@ -411,5 +465,220 @@ Vue.component('v-predict-graph', {
   '<div class="predict-graph result-graph">' +
   '<canvas class="result-graph_canvas" id="predict-graph"></canvas>' +
   '</div>' +
+  '</div>',
+});
+
+// カレンダー
+Vue.component('v-calendar-history', {
+ store: store,
+ props: {
+  minDate: '',
+  maxDate: '',
+  isLoad: false,
+ },
+ data: function () {
+  return {
+   flatpickrCal: null,
+   valCal: '',
+   id: 'calendar_history',
+  };
+ },
+ methods: {
+  initCal: function () {
+   let self = this;
+   this.valCal =
+    store.state.historySeletedDateStart +
+    ' to ' +
+    store.state.historySeletedDateEnd;
+   const triggerCalendar = document.querySelector('#' + this.id);
+   setTimeout(function () {
+    self.flatpickrCal = flatpickr(triggerCalendar, {
+     // 動作モード
+     mode: 'range',
+     // データフォーマット
+     dateFormat: 'Y/m/d',
+     // 初期日付
+     defaulDate: [
+      store.state.historySeletedDateStart,
+      store.state.historySeletedDateEnd,
+     ],
+     // 選択可能な最小日付
+     minDate: self.minDate,
+     // 選択可能な最大日付
+     maxDate: self.maxDate,
+     // 表示フォーマット
+     altFormat: 'Y/m/d',
+     // データと表示のフォーマットを変えるか
+     altInput: true,
+     // モバイル時はデフォルトのカレンダーを使用するか
+     disableMobile: true,
+     // カレンダーの位置をwrapper内部に移動させるか
+     static: false,
+     // カレンダーをwrapper内部に作成させるか
+     wrap: true,
+     // 月切り替えボタン（次月）
+     nextArrow: '',
+     // 月切り替えボタン（前月）
+     prevArrow: '',
+     // 日付を変更した時の処理
+     onChange: function (selectedDates, dateStr) {
+      let dataArray = dateStr.match(
+       /^(\d{4})\/(\d{2})\/(\d{2}) to (\d{4})\/(\d{2})\/(\d{2})/
+      );
+      if (dataArray != null) {
+       store.commit(
+        'setHistorySeletedDateStart',
+        dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+       );
+       store.commit(
+        'setHistorySeletedDateEnd',
+        dataArray[4] + '/' + dataArray[5] + '/' + dataArray[6]
+       );
+      } else {
+       dataArray = dateStr.match(/^(\d{4})\/(\d{2})\/(\d{2})/);
+       if (dataArray != null) {
+        store.commit(
+         'setHistorySeletedDateStart',
+         dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+        );
+        store.commit(
+         'setHistorySeletedDateEnd',
+         dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+        );
+       }
+      }
+      return false;
+     },
+    });
+   }, 100);
+  },
+ },
+ mounted: function () {
+  if (this.isLoad) {
+   this.initCal();
+  }
+ },
+ watch: {
+  isLoad: function () {
+   if (this.isLoad) {
+    this.initCal();
+   }
+  },
+ },
+ template:
+  '<div class="calendar" :id="id">' +
+  '<fieldset class="fr_calendar-box">' +
+  '<label class="frm_lbl is-calendar is-range">' +
+  '<i class="icon is-calendar"></i>' +
+  '<input type="hidden" class="flatpickr-input" :data-input="valCal" :value="valCal">' +
+  '</label>' +
+  '</fieldset>' +
+  '</div>',
+});
+
+Vue.component('v-calendar-predict', {
+ store: store,
+ props: {
+  minDate: '',
+  maxDate: '',
+  isLoad: false,
+ },
+ data: function () {
+  return {
+   flatpickrCal: null,
+   valCal: '',
+   id: 'calendar_predict',
+  };
+ },
+ methods: {
+  initCal: function () {
+   let self = this;
+   this.valCal =
+    store.state.predictSeletedDateStart +
+    ' to ' +
+    store.state.predictSeletedDateEnd;
+   const triggerCalendar = document.querySelector('#' + this.id);
+   setTimeout(function () {
+    self.flatpickrCal = flatpickr(triggerCalendar, {
+     // 動作モード
+     mode: 'range',
+     // データフォーマット
+     dateFormat: 'Y/m/d',
+     // 初期日付
+     defaulDate: [
+      store.state.predictSeletedDateStart,
+      store.state.predictSeletedDateEnd,
+     ],
+     // 選択可能な最小日付
+     minDate: self.minDate,
+     // 選択可能な最大日付
+     maxDate: self.maxDate,
+     // 表示フォーマット
+     altFormat: 'Y/m/d',
+     // データと表示のフォーマットを変えるか
+     altInput: true,
+     // モバイル時はデフォルトのカレンダーを使用するか
+     disableMobile: true,
+     // カレンダーの位置をwrapper内部に移動させるか
+     static: false,
+     // カレンダーをwrapper内部に作成させるか
+     wrap: true,
+     // 月切り替えボタン（次月）
+     nextArrow: '',
+     // 月切り替えボタン（前月）
+     prevArrow: '',
+     // 日付を変更した時の処理
+     onChange: function (selectedDates, dateStr) {
+      let dataArray = dateStr.match(
+       /^(\d{4})\/(\d{2})\/(\d{2}) to (\d{4})\/(\d{2})\/(\d{2})/
+      );
+      if (dataArray != null) {
+       store.commit(
+        'setPredictSeletedDateStart',
+        dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+       );
+       store.commit(
+        'setPredictSeletedDateEnd',
+        dataArray[4] + '/' + dataArray[5] + '/' + dataArray[6]
+       );
+      } else {
+       dataArray = dateStr.match(/^(\d{4})\/(\d{2})\/(\d{2})/);
+       if (dataArray != null) {
+        store.commit(
+         'setPredictSeletedDateStart',
+         dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+        );
+        store.commit(
+         'setPredictSeletedDateEnd',
+         dataArray[1] + '/' + dataArray[2] + '/' + dataArray[3]
+        );
+       }
+      }
+      return false;
+     },
+    });
+   }, 100);
+  },
+ },
+ mounted: function () {
+  if (this.isLoad) {
+   this.initCal();
+  }
+ },
+ watch: {
+  isLoad: function () {
+   if (this.isLoad) {
+    this.initCal();
+   }
+  },
+ },
+ template:
+  '<div class="calendar" :id="id">' +
+  '<fieldset class="fr_calendar-box">' +
+  '<label class="frm_lbl is-calendar is-range">' +
+  '<i class="icon is-calendar"></i>' +
+  '<input type="hidden" class="flatpickr-input" :data-input="valCal" :value="valCal">' +
+  '</label>' +
+  '</fieldset>' +
   '</div>',
 });

@@ -47,6 +47,7 @@ include_once('./php/functions.php');
   src="./js/lib/smooth-scroll.polyfills.min.js?v=<?php echo getFileUpdateDate('/js/lib/smooth-scroll.polyfills.min.js'); ?>"
   defer></script>
  <script src="./js/lib/chart.min.js?v=<?php echo getFileUpdateDate('/js/lib/chart.min.js'); ?>" defer></script>
+ <script src="./js/lib/flatpickr.min.js?v=<?php echo getFileUpdateDate('/js/lib/flatpickr.min.js'); ?>" defer></script>
  <script src="./js/lib/axios.min.js?v=<?php echo getFileUpdateDate('/js/lib/axios.min.js'); ?>" defer></script>
  <script src="./js/lib/vue.min.js?v=<?php echo getFileUpdateDate('/js/lib/vue.min.js'); ?>" defer></script>
  <script src="./js/lib/vuex.js?v=<?php echo getFileUpdateDate('/js/lib/vuex.js'); ?>" defer></script>
@@ -87,9 +88,9 @@ include_once('./php/functions.php');
        <li class="hd-page-link_item">
         <button class="page-top-btn" @click="scrollPage('body')">
          <span class="page-top-tx">PAGE TOP</span>
+        </button>
        </li>
       </ul>
-      </button>
      </div>
     </div><!-- /.inner -->
    </div><!-- /.hd-menu-wrap -->
@@ -160,6 +161,8 @@ include_once('./php/functions.php');
          <v-cnt-ttl ttl="全国の感染者/<br class='sp-obj'>死亡者推移"></v-cnt-ttl>
         </dib><!-- /.cmn-cnt -->
         <dib class="cmn-cnt is-right">
+         <v-calendar-history :min-date="historyMinDate" :max-date="historyMaxDate" :is-load="isLoadHistory">
+         </v-calendar-history>
         </dib><!-- /.cmn-cnt -->
        </dib><!-- /.cmn-cnt-box -->
       </div>
@@ -182,6 +185,8 @@ include_once('./php/functions.php');
          <v-cnt-ttl ttl="全国の感染者/<br class='sp-obj'>死亡者予測"></v-cnt-ttl>
         </dib><!-- /.cmn-cnt -->
         <dib class="cmn-cnt is-right">
+         <v-calendar-predict :min-date="predictMinDate" :max-date="predictMaxDate" :is-load="isLoadPredict">
+         </v-calendar-predict>
         </dib><!-- /.cmn-cnt -->
        </dib><!-- /.cmn-cnt-box -->
       </div>
