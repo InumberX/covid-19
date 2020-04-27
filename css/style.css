@@ -1338,6 +1338,9 @@ a.page-link-btn {
  background-size: 5px 5px, 5px 5px, 1px 26px;
  background-repeat: no-repeat;
 }
+.flatpickr-current-month .flatpickr-monthDropdown-months::-ms-expand {
+ display: none;
+}
 .flatpickr-current-month .flatpickr-monthDropdown-months:focus,
 .flatpickr-current-month .flatpickr-monthDropdown-months:active {
  outline: none;
@@ -1555,6 +1558,7 @@ span.flatpickr-weekday {
 }
 .flatpickr-rContainer {
  display: inline-block;
+ width: 100%;
  padding: 0;
  box-sizing: border-box;
 }
