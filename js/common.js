@@ -273,6 +273,22 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
       }
      }
     }
+
+    const target = store.state.sortPref.target;
+    const mode = store.state.sortPref.mode;
+
+    // ソートを行う場合
+    if (target !== '') {
+     this.outputDataPref.sort(function (a, b) {
+      let result = '';
+      if (mode === 'desc') {
+       result = b[target] - a[target];
+      } else {
+       result = a[target] - b[target];
+      }
+      return result;
+     });
+    }
    },
    // 都道府県チェックボックス初期化処理
    initPrefCheck: function () {
@@ -298,6 +314,12 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
    checkedPref: function () {
     return store.state.checkedPref;
    },
+   sortPrefTarget: function () {
+    return store.state.sortPref.target;
+   },
+   sortPrefMode: function () {
+    return store.state.sortPref.mode;
+   },
   },
   watch: {
    checkedPref: function () {
@@ -309,6 +331,12 @@ if (document.querySelectorAll(vMountTarget).length > 0) {
     } else {
      this.refineBtnTx = '絞り込み';
     }
+   },
+   sortPrefTarget: function () {
+    this.updateDataPref();
+   },
+   sortPrefMode: function () {
+    this.updateDataPref();
    },
   },
   // インスタンスが作成された後に実行する処理

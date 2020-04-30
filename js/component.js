@@ -192,8 +192,33 @@ Vue.component('v-pref-graph', {
 
 // 各都道府県テーブル
 Vue.component('v-pref-tbl', {
+ store: store,
  props: {
   data: [],
+ },
+ methods: {
+  // データのソートを行う処理
+  sort: function (val) {
+   const target = store.state.sortPref.target;
+   const mode = store.state.sortPref.mode;
+
+   // 新しい項目でソートを行う場合
+   if (target === '' || target !== val) {
+    store.commit('setSortPrefTarget', val);
+    store.commit('setSortPrefMode', 'desc');
+   }
+   // ソート順を変更する場合
+   else {
+    if (mode === '') {
+     store.commit('setSortPrefMode', 'desc');
+    } else if (mode === 'desc') {
+     store.commit('setSortPrefMode', 'asc');
+    } else if (mode === 'asc') {
+     store.commit('setSortPrefTarget', 'id');
+     store.commit('setSortPrefMode', 'asc');
+    }
+   }
+  },
  },
  template:
   '<div class="pref-tbl-box">' +
@@ -202,8 +227,20 @@ Vue.component('v-pref-tbl', {
   '<tr class="pref-tbl_row is-hd">' +
   '<td class="pref-tbl_cell is-hd is-num"></td>' +
   '<td class="pref-tbl_cell is-hd is-pref">都道府県</td>' +
-  '<td class="pref-tbl_cell is-hd is-cases">感染者</td>' +
-  '<td class="pref-tbl_cell is-hd is-deaths">死亡者</td>' +
+  '<td class="pref-tbl_cell is-hd is-cases">' +
+  '<button class="sort-btn" @click="sort(&#39;cases&#39;);">' +
+  '<span class="sort-btn_tx">感染者</span>' +
+  '<i v-if="store.state.sortPref.target === &#39;cases&#39; && store.state.sortPref.mode === &#39;asc&#39;" class="icon is-sort-asc is-active"></i>' +
+  '<i v-else class="icon is-sort-desc" :class="{&#39;is-active&#39;: store.state.sortPref.target === &#39;cases&#39; && store.state.sortPref.mode === &#39;desc&#39;}"></i>' +
+  '</button>' +
+  '</td>' +
+  '<td class="pref-tbl_cell is-hd is-deaths">' +
+  '<button class="sort-btn" @click="sort(&#39;deaths&#39;);">' +
+  '<span class="sort-btn_tx">死亡者</span>' +
+  '<i v-if="store.state.sortPref.target === &#39;deaths&#39; && store.state.sortPref.mode === &#39;asc&#39;" class="icon is-sort-asc is-active"></i>' +
+  '<i v-else class="icon is-sort-desc" :class="{&#39;is-active&#39;: store.state.sortPref.target === &#39;deaths&#39; && store.state.sortPref.mode === &#39;desc&#39;}"></i>' +
+  '</button>' +
+  '</td>' +
   '</tr>' +
   '</thead>' +
   '<tbody class="pref-tbl_bd">' +

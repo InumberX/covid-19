@@ -7,6 +7,10 @@ function initStore() {
   state: {
    pageStatus: 'loading',
    checkedPref: [],
+   sortPref: {
+    target: '',
+    mode: '',
+   },
    isModal: false,
    historySeletedDateStart: '',
    historySeletedDateEnd: '',
@@ -20,6 +24,12 @@ function initStore() {
    },
    setCheckedPref: function (state, data) {
     state.checkedPref = data;
+   },
+   setSortPrefTarget: function (state, data) {
+    state.sortPref.target = data;
+   },
+   setSortPrefMode: function (state, data) {
+    state.sortPref.mode = data;
    },
    setIsModal: function (state, data) {
     state.isModal = data;

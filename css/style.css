@@ -31,6 +31,9 @@
  vertical-align: text-bottom;
  font-size: 1.4rem;
 }
+.icon.is-active {
+ color: #f53e33;
+}
 .icon.is-reset:before {
  content: '\e984';
 }
@@ -899,6 +902,32 @@ a.page-link-btn {
 .pref-tbl_cell.is-deaths {
  width: 35%;
  white-space: nowrap;
+}
+
+.sort-btn,
+a.sort-btn {
+ display: block;
+ width: 82%;
+ height: auto;
+ border: 1px solid #f53e33;
+ border-radius: 100px;
+ background-color: transparent;
+ color: #989898;
+ font-size: 1.2rem;
+ padding: 1px 0;
+ margin: 0 auto;
+ outline: 0;
+ box-sizing: border-box;
+ text-align: center;
+ cursor: pointer;
+ transition: 0.3s color;
+}
+.sort-btn:hover,
+a.sort-btn:hover {
+ color: #f53e33;
+}
+.sort-btn .icon {
+ margin-left: 4px;
 }
 
 /* メッセージ ========== */
