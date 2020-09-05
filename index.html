@@ -176,6 +176,30 @@ include_once('./php/functions.php');
 
     </section>
 
+    <section class="cnt-wrap" id="sec_history_pref">
+
+     <div class="cnt-box cnt-ttl-box">
+      <div class="inner">
+       <dib class="cmn-cnt-box">
+        <dib class="cmn-cnt is-left">
+         <v-cnt-ttl ttl="全国の感染者推移"></v-cnt-ttl>
+        </dib><!-- /.cmn-cnt -->
+        <dib class="cmn-cnt is-right">
+         <v-calendar-history :min-date="historyMinDate" :max-date="historyMaxDate" :is-load="isLoadHistory">
+         </v-calendar-history>
+        </dib><!-- /.cmn-cnt -->
+       </dib><!-- /.cmn-cnt-box -->
+      </div>
+     </div><!-- /.cnt-box -->
+
+     <div class="cnt-box">
+      <div class="inner">
+       <v-history-graph :data="dataHistory"></v-history-graph>
+      </div>
+     </div><!-- /.cnt-box -->
+
+    </section>
+
     <section class="cnt-wrap" id="sec_predict">
 
      <div class="cnt-box cnt-ttl-box">
