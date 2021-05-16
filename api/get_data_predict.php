@@ -20,8 +20,9 @@ $ch = curl_init();
 
 // オプションを設定
 $chOptions = array(
- CURLOPT_URL => $url,
- CURLOPT_RETURNTRANSFER => true
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_FOLLOWLOCATION => true
 );
 
 curl_setopt_array($ch, $chOptions);
@@ -31,12 +32,12 @@ $chResult = curl_exec($ch);
 
 // データの取得に失敗した場合
 if ($chResult === false) {
- $result->status = 'failed';
+    $result->status = 'failed';
 }
 // 成功した場合
 else {
- $result->status = 'success';
- $result->data = json_decode($chResult);
+    $result->status = 'success';
+    $result->data = json_decode($chResult);
 }
 
 // セッションを閉じる
